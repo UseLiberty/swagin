@@ -1,9 +1,11 @@
 package swagger
 
 import (
+	"fmt"
 	"github.com/fatih/structtag"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/google/uuid"
 	"github.com/long2ice/swagin/router"
 	"github.com/long2ice/swagin/security"
 	"mime/multipart"
@@ -59,10 +61,29 @@ func (swagger *Swagger) getSecurityRequirements(securities []security.ISecurity)
 	}
 	return securityRequirements
 }
+
+func (swagger *Swagger) getCustomTypeSchema(t interface{}) *openapi3.Schema {
+	typeName := fmt.Sprintf("%T", t)
+	switch typeName {
+	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.IDVerification":
+		return openapi3.NewStringSchema()
+	case "liberty.AssetPrices", "map[liberty.AssetTicker][]liberty.ETFAllocation":
+		return openapi3.NewObjectSchema()
+	}
+
+	return nil
+}
+
 func (swagger *Swagger) getSchemaByType(t interface{}, request bool) *openapi3.Schema {
 	var schema *openapi3.Schema
 	var m float64
 	m = float64(0)
+
+	customType := swagger.getCustomTypeSchema(t)
+	if customType != nil {
+		return customType
+	}
+
 	switch t.(type) {
 	case int, int8, int16:
 		schema = openapi3.NewIntegerSchema()
@@ -79,7 +100,7 @@ func (swagger *Swagger) getSchemaByType(t interface{}, request bool) *openapi3.S
 	case uint64:
 		schema = openapi3.NewInt64Schema()
 		schema.Min = &m
-	case string:
+	case string, uuid.UUID:
 		schema = openapi3.NewStringSchema()
 	case time.Time:
 		schema = openapi3.NewDateTimeSchema()
@@ -131,6 +152,9 @@ func (swagger *Swagger) getRequestSchemaByModel(model interface{}) *openapi3.Sch
 			if err != nil {
 				continue
 			}
+			if tag.Name == "" {
+				continue
+			}
 			fieldSchema := swagger.getSchemaByType(value.Interface(), true)
 			descriptionTag, err := tags.Get(DESCRIPTION)
 			if err == nil {
@@ -174,12 +198,16 @@ func (swagger *Swagger) getRequestBodyByModel(model interface{}, contentType str
 func (swagger *Swagger) getResponseSchemaByModel(model interface{}) *openapi3.Schema {
 	type_ := reflect.TypeOf(model)
 	value_ := reflect.ValueOf(model)
+
+	//fmt.Println("Type in getResponseSchemaByModel: ", type_)
+	//fmt.Println("Value in getResponseSchemaByModel: ", model)
 	if type_.Kind() == reflect.Ptr {
 		type_ = type_.Elem()
 	}
 	if value_.Kind() == reflect.Ptr {
 		value_ = value_.Elem()
 	}
+
 	schema := openapi3.NewObjectSchema()
 	if type_.Kind() == reflect.Struct {
 		for i := 0; i < type_.NumField(); i++ {
@@ -192,6 +220,9 @@ func (swagger *Swagger) getResponseSchemaByModel(model interface{}) *openapi3.Sc
 			}
 			tag, err := tags.Get("json")
 			if err != nil {
+				continue
+			}
+			if tag.Name == "" {
 				continue
 			}
 			bindingTag, err := tags.Get(BINDING)
