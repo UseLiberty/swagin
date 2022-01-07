@@ -1,4 +1,4 @@
-module github.com/UseLiberty/swagin
+module github.com/useliberty/swagin
 
 go 1.16
 
