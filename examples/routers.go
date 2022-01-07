@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin/binding"
-	"github.com/long2ice/swagin/router"
-	"github.com/long2ice/swagin/security"
+	"github.com/UseLiberty/swagin/router"
+	"github.com/UseLiberty/swagin/security"
 )
 
 var (

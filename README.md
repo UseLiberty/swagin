@@ -1,7 +1,7 @@
 # Swagger + Gin = SwaGin
 
-[![deploy](https://github.com/long2ice/swagin/actions/workflows/deploy.yml/badge.svg)](https://github.com/long2ice/swagin/actions/workflows/deploy.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/long2ice/swagin.svg)](https://pkg.go.dev/github.com/long2ice/swagin)
+[![deploy](https://github.com/UseLiberty/swagin/actions/workflows/deploy.yml/badge.svg)](https://github.com/UseLiberty/swagin/actions/workflows/deploy.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/UseLiberty/swagin.svg)](https://pkg.go.dev/github.com/UseLiberty/swagin)
 
 ## Introduction
 
@@ -19,7 +19,7 @@ docs with comment is so stupid. So there is `SwaGin`.
 ## Installation
 
 ```shell
-go get -u github.com/long2ice/swagin
+go get -u github.com/UseLiberty/swagin
 ```
 
 ## Online Demo
@@ -29,7 +29,7 @@ You can see online demo at <https://swagin.long2ice.io/docs> or <https://swagin.
 ![](https://raw.githubusercontent.com/long2ice/swagin/dev/images/docs.png)
 ![](https://raw.githubusercontent.com/long2ice/swagin/dev/images/redoc.png)
 
-And you can reference all usage in [examples](https://github.com/long2ice/swagin/tree/dev/examples).
+And you can reference all usage in [examples](https://github.com/UseLiberty/swagin/tree/dev/examples).
 
 ## Usage
 
@@ -42,14 +42,14 @@ package examples
 
 import (
   "github.com/getkin/kin-openapi/openapi3"
-  "github.com/long2ice/swagin/swagger"
+  "github.com/UseLiberty/swagin/swagger"
 )
 
 func NewSwagger() *swagger.Swagger {
   return swagger.New("SwaGin", "Swagger + Gin = SwaGin", "0.1.0",
     swagger.License(&openapi3.License{
       Name: "Apache License 2.0",
-      URL:  "https://github.com/long2ice/swagin/blob/dev/LICENSE",
+      URL:  "https://github.com/UseLiberty/swagin/blob/dev/LICENSE",
     }),
     swagger.Contact(&openapi3.Contact{
       Name:  "long2ice",
@@ -157,7 +157,7 @@ package main
 
 import (
   "github.com/gin-contrib/cors"
-  "github.com/long2ice/swagin"
+  "github.com/UseLiberty/swagin"
 )
 
 func main() {
@@ -223,5 +223,5 @@ func main() {
 ## License
 
 This project is licensed under the
-[Apache-2.0](https://github.com/long2ice/swagin/blob/master/LICENSE)
+[Apache-2.0](https://github.com/UseLiberty/swagin/blob/master/LICENSE)
 License.

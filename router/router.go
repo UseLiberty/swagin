@@ -3,7 +3,7 @@ package router
 import (
 	"container/list"
 	"github.com/gin-gonic/gin"
-	"github.com/long2ice/swagin/security"
+	"github.com/UseLiberty/swagin/security"
 )
 
 type Router struct {

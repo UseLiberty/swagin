@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-contrib/cors"
-	"github.com/long2ice/swagin"
-	"github.com/long2ice/swagin/security"
+	"github.com/UseLiberty/swagin"
+	"github.com/UseLiberty/swagin/security"
 )
 
 func main() {

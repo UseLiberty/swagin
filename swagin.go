@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/gin-gonic/gin"
-	"github.com/long2ice/swagin/router"
-	"github.com/long2ice/swagin/swagger"
+	"github.com/UseLiberty/swagin/router"
+	"github.com/UseLiberty/swagin/swagger"
 	"html/template"
 	"net/http"
 )
