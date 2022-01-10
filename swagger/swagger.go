@@ -201,6 +201,10 @@ func (swagger *Swagger) getResponseSchemaByModel(model interface{}) *openapi3.Sc
 
 	//fmt.Println("Type in getResponseSchemaByModel: ", type_)
 	//fmt.Println("Value in getResponseSchemaByModel: ", model)
+	if type_ == nil {
+		return nil
+	}
+
 	if type_.Kind() == reflect.Ptr {
 		type_ = type_.Elem()
 	}
