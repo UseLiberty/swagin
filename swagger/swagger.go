@@ -65,8 +65,12 @@ func (swagger *Swagger) getSecurityRequirements(securities []security.ISecurity)
 
 func (swagger *Swagger) getCustomTypeSchema(t interface{}) *openapi3.Schema {
 	typeName := fmt.Sprintf("%T", t)
+	if _, ok := t.(string); ok {
+		return openapi3.NewStringSchema()
+	}
+
 	switch typeName {
-	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.IDVerification":
+	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.IDVerification", "liberty.JuiceVerification":
 		return openapi3.NewStringSchema()
 	case "map[liberty.AssetTicker][]liberty.ETFAllocation", "liberty.AssetTickerToAmount":
 		return openapi3.NewObjectSchema()
@@ -134,6 +138,10 @@ func (swagger *Swagger) getSchemaByType(t interface{}, request bool) *openapi3.S
 func (swagger *Swagger) getRequestSchemaByModel(model interface{}) *openapi3.Schema {
 	type_ := reflect.TypeOf(model)
 	value_ := reflect.ValueOf(model)
+	if os.Getenv("DEBUG") != "" {
+		fmt.Println("Type in getResponseSchemaByModel: ", type_)
+		fmt.Println("Value in getResponseSchemaByModel: ", model)
+	}
 	schema := openapi3.NewObjectSchema()
 	if type_.Kind() == reflect.Ptr {
 		type_ = type_.Elem()
