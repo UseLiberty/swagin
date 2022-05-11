@@ -70,10 +70,12 @@ func (swagger *Swagger) getCustomTypeSchema(t interface{}) *openapi3.Schema {
 	}
 
 	switch typeName {
-	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.IDVerification", "liberty.JuiceVerification":
+	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.Coin", "liberty.IDVerification", "liberty.JuiceVerification", "kingdom.AuthType", "kingdom.Type":
 		return openapi3.NewStringSchema()
-	case "map[liberty.AssetTicker][]liberty.ETFAllocation", "liberty.AssetTickerToAmount":
+	case "map[liberty.AssetTicker][]liberty.ETFAllocation", "liberty.AssetTickerToAmount", "liberty.Bank":
 		return openapi3.NewObjectSchema()
+	case "pgtype.Status":
+		return openapi3.NewIntegerSchema()
 	}
 
 	return nil
