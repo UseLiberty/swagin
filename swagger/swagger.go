@@ -2,18 +2,19 @@ package swagger
 
 import (
 	"fmt"
-	"github.com/fatih/structtag"
-	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/google/uuid"
-	"github.com/useliberty/swagin/router"
-	"github.com/useliberty/swagin/security"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"reflect"
 	"regexp"
 	"time"
+
+	"github.com/fatih/structtag"
+	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/google/uuid"
+	"github.com/useliberty/swagin/router"
+	"github.com/useliberty/swagin/security"
 )
 
 const (
@@ -70,7 +71,7 @@ func (swagger *Swagger) getCustomTypeSchema(t interface{}) *openapi3.Schema {
 	}
 
 	switch typeName {
-	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.Coin", "liberty.IDVerification", "liberty.JuiceVerification", "kingdom.AuthType", "kingdom.Type":
+	case "liberty.AssetTicker", "liberty.AssetClass", "liberty.WalletType", "liberty.Currency", "liberty.IDVerification", "liberty.JuiceVerification", "liberty.Coin", "liberty.Chain":
 		return openapi3.NewStringSchema()
 	case "map[liberty.AssetTicker][]liberty.ETFAllocation", "liberty.AssetTickerToAmount", "liberty.Bank":
 		return openapi3.NewObjectSchema()
